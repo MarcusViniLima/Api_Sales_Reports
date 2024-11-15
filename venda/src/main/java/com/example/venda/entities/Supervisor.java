@@ -1,6 +1,9 @@
 package com.example.venda.entities;
 
+import java.util.Collection;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.example.venda.entities.Enum.AcessLevels;
 
@@ -34,4 +37,6 @@ public boolean equals(Object obj) {
     Supervisor other = (Supervisor) obj;
     return acessLevels == other.acessLevels;
 }
+
+
 }

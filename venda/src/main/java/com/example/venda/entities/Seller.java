@@ -1,7 +1,10 @@
 package com.example.venda.entities;
 
 
+import java.util.Collection;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.example.venda.entities.Enum.AcessLevels;
 
@@ -37,4 +40,6 @@ public class Seller extends Users {
         Seller vendedor = (Seller) obj;
         return acessLevels == vendedor.acessLevels;
     }
+
+    
 }
