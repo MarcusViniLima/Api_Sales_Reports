@@ -27,7 +27,18 @@ public class WebSecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                        //Clients's rules
+                        .requestMatchers(HttpMethod.POST, "/clients").hasRole("SELLER")
+                        .requestMatchers("/client/**").hasAnyRole("SUPERVISOR","SELLER")
+                        //Sallers's rules
+                        .requestMatchers("/seller/**").hasRole("SUPERVISOR")   
+                        //Sales's rules
+                        .requestMatchers(HttpMethod.DELETE, "/sales/{id}").hasRole("SUPERVISOR")
+                        .requestMatchers("/sale/**").hasAnyRole("SUPERVISOR", "SELLER")
+                        //Products's rules
+                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("CLIENT", "SUPERVISOR", "SELLER")
+                        .requestMatchers("/product/**").hasAnyRole("SUPERVISOR", "SELLER")
                         .anyRequest().authenticated())
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

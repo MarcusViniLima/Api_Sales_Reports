@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Supervisor extends Users{
+public class Supervisor extends Member{
     
     @Enumerated(EnumType.STRING)
     private AcessLevels acessLevels = AcessLevels.ROLE_SUPERVISOR;

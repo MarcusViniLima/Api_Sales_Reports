@@ -3,10 +3,7 @@ package com.example.venda.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.venda.entities.Supervisor;
 import com.example.venda.repository.SupervisorRepository;
@@ -22,45 +19,49 @@ public class SupervisorService {
     @Transactional
     public Supervisor save(Supervisor supervisor){
         if(supervisor == null){
-            throw new IllegalArgumentException("Supervisor não pode ser vazio");
+            throw new IllegalArgumentException("Supervisor cannot be empty");
         }
-        if(supervisorRepository.existsById(supervisor.getId())){
-            throw new IllegalArgumentException("Supervisor já existe");
+        if(supervisorRepository.existsByEmail(supervisor.getEmail())){
+            throw new IllegalArgumentException("Supervisor already exists");
         }
 
         try {
             return supervisorRepository.save(supervisor);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar supervisor", e);
+            throw new RuntimeException("Erro to save supervisor", e);
         }
     } 
 
     @Transactional
-    public void delete(Long id){
-        if(!supervisorRepository.existsById(id)){
-            throw new IllegalArgumentException("Supervisor não existe");
+    public void delete(String email){
+        Supervisor supervisorbd  = supervisorRepository.findByEmail(email);
+        try {
+            supervisorRepository.delete(supervisorbd);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro to delete supervisor", e);
         }
-        supervisorRepository.deleteById(id);
+        
     }
 
     @Transactional
-    public Supervisor update(Supervisor supervisor, Long id){
-        Supervisor supervisorbd = this.findById(id);
-        supervisorbd.setId(id);
+    public Supervisor update(Supervisor supervisor, String email){
+        Supervisor supervisorbd = supervisorRepository.findByEmail(email);
         supervisorbd.setName(supervisor.getName());
         supervisorbd.setEmail(supervisor.getEmail());
         
         try {
             return supervisorRepository.save(supervisorbd);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar supervisor", e);
+            throw new RuntimeException("Erro to update supervisor", e);
         }
     }
 
-    public Supervisor findById(Long id){
-        Supervisor supervisor = supervisorRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supervisor não encontrado"));
-            return supervisor;
+    public Supervisor findByEmail(String email){
+        try {
+            return supervisorRepository.findByEmail(email);
+        } catch (Exception e) {
+            throw new RuntimeException("Supervisor doesn't exist", e);
+        }
     }
 
     public List<Supervisor> findAll(){

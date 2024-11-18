@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.venda.dto.SaleCreateDTO;
 import com.example.venda.entities.Sale;
 import com.example.venda.service.SaleService;
 
 @RestController
-@RequestMapping("/sales")
+@RequestMapping("/sale")
 public class SaleController {
 
     @Autowired
     private SaleService saleService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Sale sale) {
-        saleService.save(sale);
-        return ResponseEntity.status(HttpStatus.OK).body(sale);
+    public ResponseEntity<Object> save(@RequestBody SaleCreateDTO saleDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(saleService.save(saleDto));
     }
 
     @GetMapping
@@ -44,7 +44,7 @@ public class SaleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         saleService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Venda deletada com sucesso.");
+        return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete sale.");
     }
 
 }

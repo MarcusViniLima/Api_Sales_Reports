@@ -19,7 +19,7 @@ import com.example.venda.service.UsersService;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UsersController {
     @Autowired
     private UsersService usersService;

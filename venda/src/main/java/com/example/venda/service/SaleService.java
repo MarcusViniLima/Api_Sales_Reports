@@ -1,5 +1,6 @@
 package com.example.venda.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.venda.dto.SaleCreateDTO;
+import com.example.venda.dto.mapper.SaleMapper;
+import com.example.venda.entities.Client;
 import com.example.venda.entities.Product;
 import com.example.venda.entities.Sale;
+import com.example.venda.entities.Seller;
 import com.example.venda.repository.SaleRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,58 +29,62 @@ public class SaleService {
     private ClientService clientService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private SaleMapper saleMapper;
 
     @Transactional
-    public Sale save(Sale sale){
-        if(sale == null){
-            throw new IllegalArgumentException("Venda nula");
+    public Sale save(SaleCreateDTO dto) {
+
+        if(dto.getQuantity() <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than 0");
         }
-        if(sale.getIdClient() == null){
-            throw new IllegalArgumentException("Cliente nulo");
+        Client client = clientService.findByEmail(dto.getClientEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Client doesn't exist"));
+        
+        Seller seller = sellerService.findByEmail(dto.getSellerEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Seller doesn't exist")); 
+
+        Product product = productService.findByCode(dto.getProductCode())
+                .orElseThrow(() -> new IllegalArgumentException("Product doesn't exist"));
+
+        Sale sale = saleMapper.toEntity(dto, client, seller, product);
+
+        if (product.getQuantity() < dto.getQuantity()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product quantity is not enough");
         }
-        if(sale.getIdSeller() == null){
-            throw new IllegalArgumentException("Vendedor nulo");
-        }
-        if(sale.getIdProduct() == null){
-            throw new IllegalArgumentException("Produto nulo");
-        }
-        if(clientService.findById(sale.getIdClient()) == null){
-            throw new IllegalArgumentException("Cliente nao cadastrado");
-        }
-        if(sellerService.findById(sale.getIdSeller()) == null){
-            throw new IllegalArgumentException("Vendedor nao cadastrado");
-        }
-        if(productService.findById(sale.getIdProduct()) == null){
-            throw new IllegalArgumentException("Produto nao cadastrado");
-        }
-        Product product = productService.findById(sale.getIdProduct());
+        sale.setPriceSale(product.getPrice().multiply(BigDecimal.valueOf(sale.getQuantityProdutc())));
         product.setQuantity(product.getQuantity() - sale.getQuantityProdutc());
-        productService.update(product, sale.getIdProduct());
+        productService.update(product, product.getCode());
+
         try {
             return saleRepository.save(sale);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar venda", e);
+            throw new RuntimeException("Erro to save sale", e);
         }
-        
+
     }
 
     @Transactional
     public void delete(Long id) {
         Sale sale = this.findById(id);
-        Product product = productService.findById(sale.getIdProduct());
+        Product product = productService.findByCode(sale.getProduct().getCode()).get();
         product.setQuantity(product.getQuantity() + sale.getQuantityProdutc());
-        productService.update(product, sale.getIdProduct());
+        productService.update(product, sale.getProduct().getCode());
         try {
             saleRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao deletar venda", e);
+            throw new RuntimeException("Erro to delete sale", e);
         }
     }
 
     public Sale findById(Long id){
-        Sale sale = saleRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venda nao encontrada"));
+       try {
+        Sale sale = saleRepository.findById(id).get();
         return sale;
+       } catch (Exception e) {
+        throw new RuntimeException("Sale doesn't exist", e);
+       }
+         
         
     }
 

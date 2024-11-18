@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Seller extends Users {
+public class Seller extends Member {
 
     @Enumerated(EnumType.STRING)
     private AcessLevels acessLevels = AcessLevels.ROLE_SELLER;
