@@ -29,9 +29,6 @@ public class SaleService {
     private ClientService clientService;
     @Autowired
     private ProductService productService;
-    @Autowired
-    private SaleMapper saleMapper;
-
     @Transactional
     public Sale save(SaleCreateDTO dto) {
 
@@ -47,7 +44,7 @@ public class SaleService {
         Product product = productService.findByCode(dto.getProductCode())
                 .orElseThrow(() -> new IllegalArgumentException("Product doesn't exist"));
 
-        Sale sale = saleMapper.toEntity(dto, client, seller, product);
+        Sale sale = SaleMapper.toEntity(dto, client, seller, product);
 
         if (product.getQuantity() < dto.getQuantity()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product quantity is not enough");

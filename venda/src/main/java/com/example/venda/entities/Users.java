@@ -1,9 +1,7 @@
 package com.example.venda.entities;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +24,7 @@ import lombok.Setter;
 
 
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public abstract class Users implements UserDetails {
+public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +37,18 @@ public abstract class Users implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private AcessLevels acessLevels;
+
+    public Users(String email, String password, AcessLevels acessLevels) {
+        this.email = email;
+        this.password = password;
+        this.acessLevels = acessLevels;
+    }
+    public Users(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

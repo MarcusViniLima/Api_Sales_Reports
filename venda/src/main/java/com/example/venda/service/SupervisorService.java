@@ -1,6 +1,7 @@
 package com.example.venda.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class SupervisorService {
 
     @Transactional
     public void delete(String email){
-        Supervisor supervisorbd  = supervisorRepository.findByEmail(email);
+        Supervisor supervisorbd  = supervisorRepository.findByEmail(email).get();
         try {
             supervisorRepository.delete(supervisorbd);
         } catch (Exception e) {
@@ -45,7 +46,7 @@ public class SupervisorService {
 
     @Transactional
     public Supervisor update(Supervisor supervisor, String email){
-        Supervisor supervisorbd = supervisorRepository.findByEmail(email);
+        Supervisor supervisorbd = supervisorRepository.findByEmail(email).get();
         supervisorbd.setName(supervisor.getName());
         supervisorbd.setEmail(supervisor.getEmail());
         
@@ -56,7 +57,7 @@ public class SupervisorService {
         }
     }
 
-    public Supervisor findByEmail(String email){
+    public Optional<Supervisor> findByEmail(String email){
         try {
             return supervisorRepository.findByEmail(email);
         } catch (Exception e) {

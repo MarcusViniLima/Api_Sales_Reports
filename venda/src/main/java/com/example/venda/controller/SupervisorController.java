@@ -37,7 +37,7 @@ public class SupervisorController {
 
     @GetMapping("/{email}")
     public ResponseEntity<Object> findById(@PathVariable String email) {
-        Supervisor supervisor = supervisorService.findByEmail(email);
+        Supervisor supervisor = supervisorService.findByEmail(email).get();
         return ResponseEntity.status(HttpStatus.OK).body(supervisor);
     }
 
