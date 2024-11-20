@@ -1,11 +1,10 @@
 package com.example.venda.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.venda.entities.Product;
 import com.example.venda.repository.ProductRepository;
@@ -21,23 +20,27 @@ public class ProductService {
     @Transactional
     public Product save(Product produto){
         if(produto == null){
-            throw new IllegalArgumentException("Produto cnão pode ser vazio");
+            throw new IllegalArgumentException("Product cannot be empty");
         }
-        if(produtoRepository.existsById(produto.getId())){
-            throw new IllegalArgumentException("Produto já existe");
+        if(produtoRepository.existsByCode(produto.getCode())){
+            throw new IllegalArgumentException("Product already exists");
         }
 
         try {
             return produtoRepository.save(produto);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar produto", e);
+            throw new RuntimeException("Erro to save product", e);
         }
     }
 
     @Transactional
-    public void delete(Long id){
-        Product produto = this.findById(id);
-        produtoRepository.delete(produto);
+    public void delete(String code){
+        Product produto = this.findByCode(code).get();
+        try { 
+            produtoRepository.delete(produto);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro to delete product", e);
+        }
 
     }
 
@@ -46,15 +49,16 @@ public class ProductService {
          return produtos;
     }
 
-    public Product findById(Long id){
-        Product produto = produtoRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado"));
-            return produto;
+    public Optional<Product> findByCode(String code){
+        try {
+            return produtoRepository.findByCode(code);
+        } catch (Exception e) {
+            throw new RuntimeException("Product doesn't exist", e);
+        }
     }
 
-    public Product update(Product produto, Long id){
-        Product produtobd = this.findById(id);
-        produtobd.setId(id);
+    public Product update(Product produto, String code){
+        Product produtobd = this.findByCode(code).get();
         produtobd.setName(produto.getName());
         produtobd.setBrand(produto.getBrand());
         produtobd.setQuantity(produto.getQuantity());
@@ -62,7 +66,7 @@ public class ProductService {
         try {
             return produtoRepository.save(produtobd);
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar produto", e);
+            throw new RuntimeException("Erro to update product", e);
         }
 
 

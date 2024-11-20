@@ -3,6 +3,7 @@ package com.example.venda.entities;
 
 import java.util.Objects;
 
+
 import com.example.venda.entities.Enum.AcessLevels;
 
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Seller extends Users {
+public class Seller extends Member {
 
     @Enumerated(EnumType.STRING)
     private AcessLevels acessLevels = AcessLevels.ROLE_SELLER;
@@ -37,4 +38,6 @@ public class Seller extends Users {
         Seller vendedor = (Seller) obj;
         return acessLevels == vendedor.acessLevels;
     }
+
+    
 }

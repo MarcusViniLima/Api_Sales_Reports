@@ -18,7 +18,7 @@ import com.example.venda.entities.Seller;
 import com.example.venda.service.SellerService;
 
 @RestController
-@RequestMapping("/vendedor")
+@RequestMapping("/seller")
 public class SellerController {
 
     @Autowired
@@ -35,21 +35,21 @@ public class SellerController {
         return vendedorService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id){
-        vendedorService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Vendedor deletado com sucesso.");
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Object> delete(@PathVariable String email){
+        vendedorService.delete(email);
+        return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete seller.");
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findByid(@PathVariable Long id){
-        Seller vendedor = vendedorService.findById(id);
+    @GetMapping("/{email}")
+    public ResponseEntity<Object> findByid(@PathVariable String email){
+        Seller vendedor = vendedorService.findByEmail(email).get();
         return ResponseEntity.status(HttpStatus.OK).body(vendedor);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody Seller vendedor, @PathVariable Long id){
-        vendedorService.update(vendedor, id);
+    @PutMapping("/{email}")
+    public ResponseEntity<Object> update(@RequestBody Seller vendedor, @PathVariable String email){
+        vendedorService.update(vendedor, email);
         return ResponseEntity.status(HttpStatus.OK).body(vendedor);
     }
 

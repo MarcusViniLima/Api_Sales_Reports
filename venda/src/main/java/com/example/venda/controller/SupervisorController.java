@@ -18,7 +18,7 @@ import com.example.venda.entities.Supervisor;
 import com.example.venda.service.SupervisorService;
 
 @RestController
-@RequestMapping("/supervisors")
+@RequestMapping("/supervisor")
 public class SupervisorController {
     @Autowired
     private SupervisorService supervisorService;
@@ -35,22 +35,22 @@ public class SupervisorController {
         return ResponseEntity.status(HttpStatus.OK).body(supervisores);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable Long id) {
-        Supervisor supervisor = supervisorService.findById(id);
+    @GetMapping("/{email}")
+    public ResponseEntity<Object> findById(@PathVariable String email) {
+        Supervisor supervisor = supervisorService.findByEmail(email).get();
         return ResponseEntity.status(HttpStatus.OK).body(supervisor);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody Supervisor supervisor, @PathVariable Long id) {
-        supervisorService.update(supervisor, id);
+    @PutMapping("/{email}")
+    public ResponseEntity<Object> update(@RequestBody Supervisor supervisor, @PathVariable String email) {
+        supervisorService.update(supervisor, email);
         return ResponseEntity.status(HttpStatus.OK).body(supervisor);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        supervisorService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Supervisor deletado com sucesso.");
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Object> delete(@PathVariable String email) {
+        supervisorService.delete(email);
+        return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete supervisor.");
     }
 
 }
