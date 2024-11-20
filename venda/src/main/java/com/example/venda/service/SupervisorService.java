@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.venda.dto.AuthenticationRegister;
 import com.example.venda.entities.Supervisor;
+import com.example.venda.entities.Enum.AcessLevels;
 import com.example.venda.repository.SupervisorRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,6 +18,9 @@ public class SupervisorService {
 
     @Autowired
     private SupervisorRepository supervisorRepository;
+
+    @Autowired
+    private UsersService usersService;
     
     @Transactional
     public Supervisor save(Supervisor supervisor){
@@ -27,6 +32,8 @@ public class SupervisorService {
         }
 
         try {
+             AuthenticationRegister user = new AuthenticationRegister(supervisor.getEmail(), supervisor.getPassword(), AcessLevels.ROLE_SUPERVISOR);
+             usersService.save(user);
             return supervisorRepository.save(supervisor);
         } catch (Exception e) {
             throw new RuntimeException("Erro to save supervisor", e);

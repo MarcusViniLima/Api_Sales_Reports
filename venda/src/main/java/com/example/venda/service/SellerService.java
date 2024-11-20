@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.venda.dto.AuthenticationRegister;
 import com.example.venda.entities.Seller;
+import com.example.venda.entities.Enum.AcessLevels;
 import com.example.venda.repository.SellerRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,6 +18,8 @@ public class SellerService {
 
     @Autowired
     SellerRepository sellerRepository;
+    @Autowired
+    UsersService usersService;
 
     @Transactional
     public Seller save(Seller seller){
@@ -27,6 +31,8 @@ public class SellerService {
         }
 
         try {
+             AuthenticationRegister user = new AuthenticationRegister(seller.getEmail(), seller.getPassword(), AcessLevels.ROLE_SELLER);
+             usersService.save(user);
             return sellerRepository.save(seller);
         } catch (Exception e) {
             throw new RuntimeException("Erro to save seller", e);

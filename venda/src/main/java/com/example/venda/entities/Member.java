@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +25,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-@MappedSuperclass @SuperBuilder
+@MappedSuperclass @SuperBuilder 
 public class Member  {
     
     @Id
@@ -33,6 +34,7 @@ public class Member  {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonIgnore
     private Users idUser;
 
     @NotBlank
