@@ -43,10 +43,14 @@ public class UsersService {
     }
 
     public String login(AuthenticationResponse user) throws Exception {
+        if(user == null){
+            throw new NullPointerException("User cannot be null");
+        }
         if (!usersRepository.existsByEmail(user.getEmail())) {
             throw new Exception(String.format("Email '%s' não cadastrado", user.getEmail()));
         }
         try {
+            System.out.println("User seller encontrado: "+user.getEmail());
             var usernamePassword = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
             var auth = authenticationManager.authenticate(usernamePassword);
 

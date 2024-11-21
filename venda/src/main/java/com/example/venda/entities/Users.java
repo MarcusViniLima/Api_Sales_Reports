@@ -17,23 +17,32 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     private String email;
 
     @Column(name = "password")
+    @NotBlank(message = "Password cannot be blank")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$", message = "Password must contain one uppercase, one lowercase, one number, and one special character.")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -45,26 +54,15 @@ public class Users implements UserDetails {
         this.password = password;
         this.acessLevels = acessLevels;
     }
+
     public Users(String email, String password) {
         this.email = email;
         this.password = password;
     }
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.acessLevels == AcessLevels.ROLE_SUPERVISOR){
-            return List.of(
-                    new SimpleGrantedAuthority("ROLE_"+ AcessLevels.ROLE_SUPERVISOR.getRole()),
-                    new SimpleGrantedAuthority("ROLE_"+ AcessLevels.ROLE_SELLER.getRole()),
-                    new SimpleGrantedAuthority("ROLE_"+ AcessLevels.ROLE_CLIENT.getRole()));
-        }
-        else if (this.acessLevels == AcessLevels.ROLE_SELLER){return List.of(
-                new SimpleGrantedAuthority("ROLE_"+ AcessLevels.ROLE_SELLER.getRole()),
-                new SimpleGrantedAuthority("ROLE_"+ AcessLevels.ROLE_CLIENT.getRole()));
-        }
-        else { return List.of(
-                new SimpleGrantedAuthority("ROLE_"+ AcessLevels.ROLE_CLIENT.getRole()));
-        }
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.acessLevels.getRole()));
     }
 
     @Override

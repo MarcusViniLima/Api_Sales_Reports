@@ -62,13 +62,13 @@ public class SaleService {
     }
 
     @Transactional
-    public void delete(Long id) {
-        Sale sale = this.findById(id);
+    public void delete(Long code) {
+        Sale sale = this.findByCode(code);
         Product product = productService.findByCode(sale.getProduct().getCode()).get();
         product.setQuantity(product.getQuantity() + sale.getQuantityProdutc());
         productService.update(product, sale.getProduct().getCode());
         try {
-            saleRepository.deleteById(id);
+            saleRepository.delete(sale);
         } catch (Exception e) {
             throw new RuntimeException("Erro to delete sale", e);
         }
@@ -89,4 +89,14 @@ public class SaleService {
         List<Sale> sales = saleRepository.findAll();
         return sales;
     }
+
+    public Sale findByCode(Long code){
+        try {
+            Sale sale = saleRepository.findByCode(code).get();
+            return sale;
+        } catch (Exception e) {
+            throw new RuntimeException("Sale doesn't exist", e);
+        }
+    }
+    
 }

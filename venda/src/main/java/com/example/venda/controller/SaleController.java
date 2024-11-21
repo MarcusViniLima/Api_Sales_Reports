@@ -41,9 +41,9 @@ public class SaleController {
         return ResponseEntity.status(HttpStatus.OK).body(sale);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        saleService.delete(id);
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Object> delete(@PathVariable Long code) {
+        saleService.delete(code);
         return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete sale.");
     }
 

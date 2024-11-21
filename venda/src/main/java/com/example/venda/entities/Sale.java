@@ -25,6 +25,9 @@ public class Sale implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    
+    private Long code;
+
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;

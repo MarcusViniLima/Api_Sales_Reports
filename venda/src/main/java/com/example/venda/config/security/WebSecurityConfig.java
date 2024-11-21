@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.example.venda.jwt.SecurityFilter;
-import com.example.venda.repository.UsersRepository;
+
 
 @EnableMethodSecurity
 @EnableWebMvc
@@ -36,8 +34,8 @@ public class WebSecurityConfig {
                 .httpBasic(basic -> basic.disable())
                 .authorizeHttpRequests(auth -> auth
                         // Auth's rules
-                        // .requestMatchers(HttpMethod.POST, "/auth").hasRole("SUPERVISOR")
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth").hasAnyRole("SUPERVISOR, SELLER")
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         // Clients's rules
                         .requestMatchers(HttpMethod.POST, "/client").hasRole("SELLER")
                         .requestMatchers("/client/**").hasAnyRole("SUPERVISOR", "SELLER")
@@ -67,10 +65,6 @@ public class WebSecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(UsersRepository usersRepository) {
-        return email -> usersRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + email));
-    }
+   
 
 }
