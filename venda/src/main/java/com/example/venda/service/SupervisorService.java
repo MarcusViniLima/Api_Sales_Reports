@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.venda.config.security.WebSecurityConfig;
 import com.example.venda.dto.AuthenticationRegister;
 import com.example.venda.entities.Supervisor;
 import com.example.venda.entities.Enum.AcessLevels;
@@ -21,6 +22,8 @@ public class SupervisorService {
 
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private WebSecurityConfig webSecurityConfig;
     
     @Transactional
     public Supervisor save(Supervisor supervisor){
@@ -33,6 +36,7 @@ public class SupervisorService {
 
         try {
              AuthenticationRegister user = new AuthenticationRegister(supervisor.getEmail(), supervisor.getPassword(), AcessLevels.ROLE_SUPERVISOR);
+             supervisor.setPassword(webSecurityConfig.passwordEncoder().encode(user.getPassword()));
              usersService.save(user);
             return supervisorRepository.save(supervisor);
         } catch (Exception e) {

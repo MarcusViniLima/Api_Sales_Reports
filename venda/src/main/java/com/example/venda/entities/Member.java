@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,12 +25,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-@MappedSuperclass @SuperBuilder 
-public class Member  {
-    
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@MappedSuperclass
+@SuperBuilder
+public class Member {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne
@@ -37,33 +42,45 @@ public class Member  {
     @JsonIgnore
     private Users idUser;
 
-    @NotBlank
-    @Size(min = 2, max = 50)
-    @Pattern(regexp = "^[A-Z][a-z]*", message = "Name must start with an uppercase letter.")
+    /*
+     * @NotBlank
+     * 
+     * @Size(min = 2, max = 50)
+     * 
+     * @Pattern(regexp = "^[A-Z][a-z]*", message =
+     * "Surname must start with an uppercase letter.")
+     */
     private String name;
 
-    @NotBlank
-    @Size(min = 2, max = 50)
-    @Pattern(regexp = "^[A-Z][a-z]*", message = "Surname must start with an uppercase letter.")
+    /*
+     * @NotBlank
+     * 
+     * @Size(min = 2, max = 50)
+     * 
+     * @Pattern(regexp = "^[A-Z][a-z]*", message =
+     * "Surname must start with an uppercase letter.")
+     */
     private String surname;
 
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotNull
     @Past
     private Date birthDate;
 
-    @NotBlank
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-            message = "Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.")
+    @NotBlank(message = "Password cannot be blank")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$", message = "Password must contain one uppercase, one lowercase, one number, and one special character.")
     private String password;
-
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Member member = (Member) o;
         return Objects.equals(id, member.id);
     }
@@ -72,5 +89,5 @@ public class Member  {
     public int hashCode() {
         return Objects.hashCode(id);
     }
-    
+
 }
