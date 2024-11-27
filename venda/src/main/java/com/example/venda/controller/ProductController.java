@@ -53,4 +53,11 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 
+    @GetMapping("/count")
+public ResponseEntity<Long> getTotalProducts() {
+    long count = produtoService.countProducts();
+    return ResponseEntity.ok(count);
+}
+
+
 }
