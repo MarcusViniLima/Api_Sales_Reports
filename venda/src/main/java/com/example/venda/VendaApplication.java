@@ -12,6 +12,14 @@ public class VendaApplication {
 		System.out.println(" Bem-vindo ao Sistema de Vendas da Rede de Lojas! 🚀 ");
 		System.out.println(" Gerencie clientes, produtos e vendas de forma eficiente! ");
 		System.out.println("===========================================");
+
+		        // Hook para exibir mensagem ao encerrar o sistema
+				Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+					System.out.println("===========================================");
+					System.out.println(" Obrigado por usar o Sistema de Vendas! 👋 ");
+					System.out.println(" Até a próxima! ");
+					System.out.println("===========================================");
+				}));
 	}
 
 }
