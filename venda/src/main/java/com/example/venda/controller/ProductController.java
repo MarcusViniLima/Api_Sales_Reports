@@ -56,14 +56,4 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 
-    @PostMapping("/register")
-    public String registerProducts() {
-        try {
-            produtoService.registerProductsFromJson();
-            return "Products registered successfully!";
-        } catch (Exception e) {
-            return "Error registering products: " + e.getMessage();
-        }
-    }
-
 }

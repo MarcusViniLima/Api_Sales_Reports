@@ -26,5 +26,12 @@
     "email": "alice2.smith@example.com",
     "birthDate": "1985-11-25",
     "password": "M@rcus123"
+  },
+  {
+    "name": "Gabriel",
+    "surname": "Pereira",
+    "email": "gabriel.pereira@example.com",
+    "birthDate": "1992-03-14",
+    "password": "G@briel2021#"
   }
 ]

@@ -106,7 +106,9 @@ public class ClientService {
                     inputStream,
                     new TypeReference<List<Client>>() {
                     });
-            clientRepository.saveAll(clients);
+            for (Client client : clients) {
+                this.save(client);
+            }
             logger.info("Client registration completed successfully: {} clients registered.", clients.size());
         } catch (IOException e) {
             logger.error("Error loading the JSON file", e);

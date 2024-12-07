@@ -128,33 +128,7 @@ public class SaleService {
                     });
     
             for (SaleCreateDTO dto : salesDTO) {
-                if (dto.getQuantity() <= 0) {
-                    throw new IllegalArgumentException("Quantity must be greater than 0");
-                }
-                if (saleRepository.existsByCode(dto.getCode())) {
-                    throw new IllegalArgumentException("Sale with code " + dto.getCode() + " already exists");
-                }
-    
-                Client client = clientService.findByEmail(dto.getClientEmail())
-                        .orElseThrow(() -> new IllegalArgumentException("Client doesn't exist"));
-    
-                Seller seller = sellerService.findByEmail(dto.getSellerEmail())
-                        .orElseThrow(() -> new IllegalArgumentException("Seller doesn't exist"));
-    
-                Product product = productService.findByCode(dto.getProductCode())
-                        .orElseThrow(() -> new IllegalArgumentException("Product doesn't exist"));
-    
-                if (product.getQuantity() < dto.getQuantity()) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product quantity is not enough");
-                }
-    
-                Sale sale = SaleMapper.toEntity(dto, client, seller, product);
-                sale.setPriceSale(product.getPrice().multiply(BigDecimal.valueOf(sale.getQuantityProduct())));
-    
-                product.setQuantity(product.getQuantity() - sale.getQuantityProduct());
-                productService.update(product, product.getCode());
-    
-                saleRepository.save(sale);
+                this.save(dto);
             }
     
             logger.info("Sale registration completed successfully: {} Sales registered.", salesDTO.size());

@@ -1,6 +1,7 @@
 package com.example.venda.entities;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ public class Client extends Member {
 
     @OneToMany(mappedBy = "client")
     @JsonBackReference
-    private List<Sale> sales;
+    private List<Sale> sales = new ArrayList<>();
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), acessLevels);
