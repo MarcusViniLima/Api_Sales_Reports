@@ -12,10 +12,9 @@ public class ObjectMapperConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Configurações personalizadas do ObjectMapper
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Saída JSON formatada
-        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS); // Não falhar em classes sem propriedades
-        objectMapper.findAndRegisterModules(); // Suporte para JavaTime (datas)
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT); 
+        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS); 
+        objectMapper.findAndRegisterModules();
 
         return objectMapper;
     }

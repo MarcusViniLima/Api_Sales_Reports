@@ -31,34 +31,30 @@ public class CostumerUserDetailsService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Busca o usuário como Client
         Client client = clientRepository.findByEmail(username).orElse(null);
         if (client != null) {
             System.out.println("CLiente encontrado");
             return createUsers(client.getEmail(), client.getPassword(), AcessLevels.ROLE_CLIENT);
         }
 
-        // Busca o usuário como Seller
         Seller seller = sellerRepository.findByEmail(username).orElse(null);
         if (seller != null) {
             System.out.println("Vendedor encontrado");
             return createUsers(seller.getEmail(), seller.getPassword(), AcessLevels.ROLE_SELLER);
         }
 
-        // Busca o usuário como Supervisor
         Supervisor supervisor = supervisorRepository.findByEmail(username).orElse(null);
         if (supervisor != null) {
             System.out.println("Supervisor encontrado");
             return createUsers(supervisor.getEmail(), supervisor.getPassword(), AcessLevels.ROLE_SUPERVISOR);
         }
-        //Busca o usuário no banco de usuário
+
         Users user = usersRepository.findByEmail(username).orElse(null);
         if (user != null) {
             System.out.println("User encontrado");
             return createUsers(user.getEmail(), user.getPassword(), user.getAcessLevels());
         }
 
-        // Caso nenhum usuário seja encontrado, lança uma exceção
         throw new UsernameNotFoundException("User not found with email: " + username);
     }
 
