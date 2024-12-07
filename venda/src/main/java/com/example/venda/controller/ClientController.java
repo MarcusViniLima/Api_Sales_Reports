@@ -25,32 +25,44 @@ public class ClientController {
     ClientService clienteService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Client cliente){
+    public ResponseEntity<Object> save(@RequestBody Client cliente) {
         clienteService.save(cliente);
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
     @GetMapping
-    public List<Client> getAll(){
+    public List<Client> getAll() {
         return clienteService.findAll();
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<Object> delete(@PathVariable String email){
+    public ResponseEntity<Object> delete(@PathVariable String email) {
         clienteService.delete(email);
         return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete client.");
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<Object> findByid(@PathVariable String email){
+    public ResponseEntity<Object> findByid(@PathVariable String email) {
         Client cliente = clienteService.findByEmail(email).get();
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
     @PutMapping("/{email}")
-    public ResponseEntity<Object> update(@RequestBody Client cliente, @PathVariable String email){
+    public ResponseEntity<Object> update(@RequestBody Client cliente, @PathVariable String email) {
         clienteService.update(cliente, email);
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
+
+    @PostMapping("/register")
+    public String registerClients() {
+        try {
+            clienteService.registerClientsFromJson();
+            return "Clients registered successfully!";
+        } catch (Exception e) {
+            return "Error registering clients: " + e.getMessage();
+        }
+    }
+
+    
 
 }

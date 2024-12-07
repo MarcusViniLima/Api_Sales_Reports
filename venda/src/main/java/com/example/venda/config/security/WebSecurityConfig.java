@@ -34,8 +34,7 @@ public class WebSecurityConfig {
                 .httpBasic(basic -> basic.disable())
                 .authorizeHttpRequests(auth -> auth
                         // Auth's rules
-                        .requestMatchers(HttpMethod.POST, "/auth").hasAnyRole("SUPERVISOR, SELLER")
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         // Clients's rules
                         .requestMatchers(HttpMethod.POST, "/client").hasRole("SELLER")
                         .requestMatchers("/client/**").hasAnyRole("SUPERVISOR", "SELLER")

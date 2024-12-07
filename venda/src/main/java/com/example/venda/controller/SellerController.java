@@ -22,35 +22,45 @@ import com.example.venda.service.SellerService;
 public class SellerController {
 
     @Autowired
-    SellerService vendedorService;
+    SellerService sellerService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Seller vendedor){
-        vendedorService.save(vendedor);
-        return ResponseEntity.status(HttpStatus.OK).body(vendedor);
+    public ResponseEntity<Object> save(@RequestBody Seller seller){
+        sellerService.save(seller);
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
     @GetMapping
     public List<Seller> getAll(){
-        return vendedorService.findAll();
+        return sellerService.findAll();
     }
 
     @DeleteMapping("/{email}")
     public ResponseEntity<Object> delete(@PathVariable String email){
-        vendedorService.delete(email);
+        sellerService.delete(email);
         return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete seller.");
     }
 
     @GetMapping("/{email}")
     public ResponseEntity<Object> findByid(@PathVariable String email){
-        Seller vendedor = vendedorService.findByEmail(email).get();
-        return ResponseEntity.status(HttpStatus.OK).body(vendedor);
+        Seller seller = sellerService.findByEmail(email).get();
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
     @PutMapping("/{email}")
-    public ResponseEntity<Object> update(@RequestBody Seller vendedor, @PathVariable String email){
-        vendedorService.update(vendedor, email);
-        return ResponseEntity.status(HttpStatus.OK).body(vendedor);
+    public ResponseEntity<Object> update(@RequestBody Seller seller, @PathVariable String email){
+        sellerService.update(seller, email);
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
+    }
+
+    @PostMapping("/register")
+    public String registerSellers() {
+        try {
+            sellerService.registerSellersFromJson();
+            return "Sellers registered successfully!";
+        } catch (Exception e) {
+            return "Error registering clients: " + e.getMessage();
+        }
     }
 
 }

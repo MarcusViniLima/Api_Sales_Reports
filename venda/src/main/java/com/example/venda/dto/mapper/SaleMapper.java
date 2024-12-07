@@ -13,10 +13,11 @@ public class SaleMapper {
 
    public static Sale toEntity(SaleCreateDTO dto, Client client, Seller seller, Product product) {
         Sale sale = new Sale();
+        sale.setCode(dto.getCode());
         sale.setClient(client); 
         sale.setSeller(seller); 
         sale.setProduct(product); 
-        sale.setQuantityProdutc(dto.getQuantity());
+        sale.setQuantityProduct(dto.getQuantity());
         sale.setPriceSale(null);
         return sale;
     }

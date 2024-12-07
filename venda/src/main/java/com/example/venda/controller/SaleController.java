@@ -35,9 +35,9 @@ public class SaleController {
         return ResponseEntity.status(HttpStatus.OK).body(sales);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable Long id) {
-        Sale sale = saleService.findById(id);
+    @GetMapping("/{code}")
+    public ResponseEntity<Object> findById(@PathVariable Long code) {
+        Sale sale = saleService.findByCode(code);
         return ResponseEntity.status(HttpStatus.OK).body(sale);
     }
 
@@ -45,6 +45,15 @@ public class SaleController {
     public ResponseEntity<Object> delete(@PathVariable Long code) {
         saleService.delete(code);
         return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete sale.");
+    }
+    @PostMapping("/register")
+    public String registerSales() {
+        try {
+            saleService.registerSalesFromJson();
+            return "Sales registered successfully!";
+        } catch (Exception e) {
+            return "Error registering clients: " + e.getMessage();
+        }
     }
 
 }

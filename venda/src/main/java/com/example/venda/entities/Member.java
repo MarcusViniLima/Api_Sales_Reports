@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -34,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
@@ -42,24 +44,18 @@ public class Member {
     @JsonIgnore
     private Users idUser;
 
-    /*
-     * @NotBlank
-     * 
-     * @Size(min = 2, max = 50)
-     * 
-     * @Pattern(regexp = "^[A-Z][a-z]*", message =
-     * "Surname must start with an uppercase letter.")
-     */
+
+    @NotBlank
+    @Size(min = 2, max = 50)
+    @Pattern(regexp = "^[A-Z][a-z]*", message =
+    "Surname must start with an uppercase letter.")
     private String name;
 
-    /*
-     * @NotBlank
-     * 
-     * @Size(min = 2, max = 50)
-     * 
-     * @Pattern(regexp = "^[A-Z][a-z]*", message =
-     * "Surname must start with an uppercase letter.")
-     */
+    
+     @NotBlank
+     @Size(min = 2, max = 50)
+     @Pattern(regexp = "^[A-Z][a-z]*", message =
+     "Surname must start with an uppercase letter.")
     private String surname;
 
     @Email
