@@ -12,5 +12,6 @@ public interface SaleRepository extends JpaRepository <Sale, Long> {
 
     boolean existsById(Long id);
     Optional<Sale> findByCode(Long code);
+    boolean existsByCode(Long code);
 
 }

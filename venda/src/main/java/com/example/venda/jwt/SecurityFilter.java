@@ -10,10 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-
-//import com.example.venda.repository.UsersRepository;
-import com.example.venda.jwt.CostumerUserDetailsService;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,9 +21,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService jwtService;
 
-    //@Autowired
-    //private UsersRepository usersRepository;
-    
+
     @Autowired
     CostumerUserDetailsService costumerUserDetailsService;
 
@@ -39,7 +33,6 @@ public class SecurityFilter extends OncePerRequestFilter {
             try {
                 var subject = jwtService.validateToken(token);
                 System.out.println("Token validado para o usuário: " + subject);
-                //UserDetails user = usersRepository.findByEmail(subject).get();
                 UserDetails user = costumerUserDetailsService.loadUserByUsername(subject);
                 if (user != null) {
                     System.out.println("Usuário autenticado: " + user.getUsername());

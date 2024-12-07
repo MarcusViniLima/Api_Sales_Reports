@@ -6,6 +6,7 @@ import java.util.Objects;
 
 
 import com.example.venda.entities.Enum.AcessLevels;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,7 +26,8 @@ public class Client extends Member {
     @Enumerated(EnumType.STRING)
     private AcessLevels acessLevels = AcessLevels.ROLE_CLIENT;
 
-    @OneToMany(mappedBy = "client")  // 'client' é o nome do campo na classe Sale
+    @OneToMany(mappedBy = "client")
+    @JsonBackReference
     private List<Sale> sales;
     @Override
     public int hashCode() {
@@ -44,5 +46,9 @@ public class Client extends Member {
         return acessLevels == cliente.acessLevels;
     }
 
+    
+    public void setSales(Sale sale) {
+        this.sales.add(sale);
+    }
     
 }

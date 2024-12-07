@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.example.venda.config.security.WebSecurityConfig;
@@ -31,15 +32,21 @@ public class SupervisorService {
             throw new IllegalArgumentException("Supervisor cannot be empty");
         }
         if(supervisorRepository.existsByEmail(supervisor.getEmail())){
-            throw new IllegalArgumentException("Supervisor already exists");
+            throw new IllegalArgumentException("Supervisor with email " + supervisor.getEmail() + " already exists");
         }
 
         try {
-             AuthenticationRegister user = new AuthenticationRegister(supervisor.getEmail(), supervisor.getPassword(), AcessLevels.ROLE_SUPERVISOR);
-             supervisor.setPassword(webSecurityConfig.passwordEncoder().encode(user.getPassword()));
-             usersService.save(user);
+            String encodedPassword = webSecurityConfig.passwordEncoder().encode(supervisor.getPassword());
+            supervisor.setPassword(encodedPassword);
+
+            AuthenticationRegister user = new AuthenticationRegister(supervisor.getEmail(), encodedPassword,
+                    AcessLevels.ROLE_SUPERVISOR);
+            usersService.save(user);
+            System.out.println("Supervisor saved in users table");
             return supervisorRepository.save(supervisor);
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("Integrity violation while saving supervisor: " + e.getMessage(), e);
+        }catch (Exception e) {
             throw new RuntimeException("Erro to save supervisor", e);
         }
     } 

@@ -1,0 +1,107 @@
+[
+    {
+      "code": 1001,
+      "clientEmail": "john.doe@example.com",
+      "sellerEmail": "joao.silva@example.com",
+      "productCode": "CEL001",
+      "quantity": 1
+    },
+    {
+      "code": 1002,
+      "clientEmail": "emma.williams@example.com",
+      "sellerEmail": "carlos.silva@example.com",
+      "productCode": "CEL002",
+      "quantity": 1
+    },
+    {
+      "code": 1003,
+      "clientEmail": "michael.johnson@example.com",
+      "sellerEmail": "roberto.oliveira@example.com",
+      "productCode": "CEL003",
+      "quantity": 2
+    },
+    {
+      "code": 1004,
+      "clientEmail": "john.doe@example.com",
+      "sellerEmail": "joao.silva@example.com",
+      "productCode": "CEL002",
+      "quantity": 1
+    },
+    {
+      "code": 1005,
+      "clientEmail": "emma.williams@example.com",
+      "sellerEmail": "carlos.silva@example.com",
+      "productCode": "CEL006",
+      "quantity": 1
+    },
+    {
+      "code": 1006,
+      "clientEmail": "michael.johnson@example.com",
+      "sellerEmail": "roberto.oliveira@example.com",
+      "productCode": "CEL003",
+      "quantity": 2
+    },
+    {
+      "code": 1007,
+      "clientEmail": "alice2.smith@example.com",
+      "sellerEmail": "joao.silva@example.com",
+      "productCode": "CEL005",
+      "quantity": 1
+    },
+    {
+      "code": 1008,
+      "clientEmail": "emma.williams@example.com",
+      "sellerEmail": "carlos.silva@example.com",
+      "productCode": "CEL007",
+      "quantity": 1
+    },
+    {
+      "code": 1009,
+      "clientEmail": "john.doe@example.com",
+      "sellerEmail": "roberto.oliveira@example.com",
+      "productCode": "CEL006",
+      "quantity": 1
+    },
+    {
+      "code": 1010,
+      "clientEmail": "michael.johnson@example.com",
+      "sellerEmail": "joao.silva@example.com",
+      "productCode": "CEL009",
+      "quantity": 1
+    },
+    {
+      "code": 1011,
+      "clientEmail": "alice2.smith@example.com",
+      "sellerEmail": "carlos.silva@example.com",
+      "productCode": "CEL010",
+      "quantity": 1
+    },
+    {
+      "code": 1012,
+      "clientEmail": "john.doe@example.com",
+      "sellerEmail": "roberto.oliveira@example.com",
+      "productCode": "NB003",
+      "quantity": 1
+    },
+    {
+      "code": 1013,
+      "clientEmail": "michael.johnson@example.com",
+      "sellerEmail": "joao.silva@example.com",
+      "productCode": "NB001",
+      "quantity": 1
+    },
+    {
+      "code": 1014,
+      "clientEmail": "alice2.smith@example.com",
+      "sellerEmail": "carlos.silva@example.com",
+      "productCode": "NB002",
+      "quantity": 1
+    },
+    {
+      "code": 1015,
+      "clientEmail": "john.doe@example.com",
+      "sellerEmail": "roberto.oliveira@example.com",
+      "productCode": "NB005",
+      "quantity": 1
+    }
+  ]

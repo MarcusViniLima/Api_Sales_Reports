@@ -2,8 +2,11 @@ package com.example.venda.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +33,8 @@ public class Product implements Serializable{
     private BigDecimal price;
     private int quantity;
 
+    @JsonBackReference
+    private List<Sale> sales;
     @Override
     public int hashCode() {
         return Objects.hash(id, name, brand, price, quantity);
@@ -49,5 +54,7 @@ public class Product implements Serializable{
                 && Objects.equals(quantity, produto.quantity);
     }
 
-
+    public void setSales(Sale sale) {
+        this.sales.add(sale);
+    }
 }

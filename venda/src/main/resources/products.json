@@ -1,0 +1,143 @@
+[
+    {
+      "code": "CEL001",
+      "name": "Samsung Galaxy S23",
+      "brand": "Samsung",
+      "price": 5999.99,
+      "quantity": 20
+    },
+    {
+      "code": "CEL002",
+      "name": "iPhone 14",
+      "brand": "Apple",
+      "price": 7299.99,
+      "quantity": 15
+    },
+    {
+      "code": "CEL003",
+      "name": "Motorola Edge 30",
+      "brand": "Motorola",
+      "price": 3499.99,
+      "quantity": 30
+    },
+    {
+      "code": "CEL004",
+      "name": "Xiaomi 13 Pro",
+      "brand": "Xiaomi",
+      "price": 4999.99,
+      "quantity": 25
+    },
+    {
+      "code": "CEL005",
+      "name": "OnePlus 11",
+      "brand": "OnePlus",
+      "price": 4699.99,
+      "quantity": 10
+    },
+    {
+      "code": "CEL006",
+      "name": "Samsung Galaxy Z Flip 5",
+      "brand": "Samsung",
+      "price": 8999.99,
+      "quantity": 12
+    },
+    {
+      "code": "CEL007",
+      "name": "Google Pixel 8",
+      "brand": "Google",
+      "price": 4499.99,
+      "quantity": 18
+    },
+    {
+      "code": "CEL008",
+      "name": "Sony Xperia 10 IV",
+      "brand": "Sony",
+      "price": 2499.99,
+      "quantity": 40
+    },
+    {
+      "code": "CEL009",
+      "name": "Asus ZenFone 9",
+      "brand": "Asus",
+      "price": 3999.99,
+      "quantity": 8
+    },
+    {
+      "code": "CEL010",
+      "name": "Nokia G50",
+      "brand": "Nokia",
+      "price": 1799.99,
+      "quantity": 50
+    },
+    {
+      "code": "NB001",
+      "name": "Dell XPS 13",
+      "brand": "Dell",
+      "price": 11999.99,
+      "quantity": 15
+    },
+    {
+      "code": "NB002",
+      "name": "MacBook Pro 16",
+      "brand": "Apple",
+      "price": 16999.99,
+      "quantity": 10
+    },
+    {
+      "code": "NB003",
+      "name": "Lenovo ThinkPad X1 Carbon",
+      "brand": "Lenovo",
+      "price": 9999.99,
+      "quantity": 20
+    },
+    {
+      "code": "NB004",
+      "name": "Acer Aspire 5",
+      "brand": "Acer",
+      "price": 2999.99,
+      "quantity": 25
+    },
+    {
+      "code": "NB005",
+      "name": "HP Spectre x360",
+      "brand": "HP",
+      "price": 11999.99,
+      "quantity": 18
+    },
+    {
+      "code": "HF001",
+      "name": "Sony WH-1000XM5",
+      "brand": "Sony",
+      "price": 1899.99,
+      "quantity": 12
+    },
+    {
+      "code": "HF002",
+      "name": "Bose QuietComfort 45",
+      "brand": "Bose",
+      "price": 1699.99,
+      "quantity": 20
+    },
+    {
+      "code": "HF003",
+      "name": "JBL Tune 750BTNC",
+      "brand": "JBL",
+      "price": 699.99,
+      "quantity": 30
+    },
+    {
+      "code": "SW001",
+      "name": "Apple Watch Series 8",
+      "brand": "Apple",
+      "price": 3999.99,
+      "quantity": 10
+    },
+    {
+      "code": "SW002",
+      "name": "Samsung Galaxy Watch 5",
+      "brand": "Samsung",
+      "price": 2299.99,
+      "quantity": 15
+    }
+  ]
+  
