@@ -1,5 +1,6 @@
 package com.example.venda.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,44 +13,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.example.venda.entities.Product;
 import com.example.venda.service.ProductService;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
     ProductService produtoService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Product produto){
+    public ResponseEntity<Object> save(@RequestBody Product produto) {
         produtoService.save(produto);
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 
     @GetMapping
-    public List<Product> getAll(){
+    public List<Product> getAll() {
         return produtoService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id){
-        produtoService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso.");
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Object> delete(@PathVariable String code) {
+        produtoService.delete(code);
+        return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete product.");
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findByid(@PathVariable Long id){
-        Product produto = produtoService.findById(id);
+    @GetMapping("/{code}")
+    public ResponseEntity<Object> findByid(@PathVariable String code) {
+        Product produto = produtoService.findByCode(code).get();
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody Product produto, @PathVariable Long id){
-        produtoService.update(produto, id);
+    @PutMapping("/{code}")
+    public ResponseEntity<Object> update(@RequestBody Product produto, @PathVariable String code) {
+        produtoService.update(produto, code);
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 

@@ -2,12 +2,18 @@ package com.example.venda.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,14 +26,18 @@ import lombok.Setter;
 public class Product implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
+    private String code;
     private String name;
     private String brand;
     private BigDecimal price;
     private int quantity;
 
+    @OneToMany(mappedBy = "product")
+    @JsonBackReference
+    private List<Sale> sales = new ArrayList<>();
     @Override
     public int hashCode() {
         return Objects.hash(id, name, brand, price, quantity);
@@ -47,5 +57,7 @@ public class Product implements Serializable{
                 && Objects.equals(quantity, produto.quantity);
     }
 
-
+    public void setSales(Sale sale) {
+        this.sales.add(sale);
+    }
 }

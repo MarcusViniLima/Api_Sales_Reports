@@ -2,12 +2,17 @@ package com.example.venda.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.UUID;
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,19 +25,27 @@ import lombok.Setter;
 public class Sale implements Serializable{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    
+    private Long code;
 
-    @JoinColumn(name = "client_id")
-    private Long idClient;
+    @ManyToOne
+    @JoinColumn(name = "id_client")
+    @JsonManagedReference
+    private Client client;
 
-    @JoinColumn(name = "seller_id")
-    private Long idSeller;
+    @ManyToOne
+    @JoinColumn(name = "id_seller")
+    @JsonManagedReference
+    private Seller seller;
 
-    @JoinColumn(name = "product_id")
-    private Long idProduct;
+    @ManyToOne
+    @JoinColumn(name = "id_product")
+    @JsonManagedReference
+    private Product product;
 
-    private int quantityProdutc;
+    private int quantityProduct;
 
     private BigDecimal priceSale;
 

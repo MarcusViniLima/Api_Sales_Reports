@@ -18,38 +18,38 @@ import com.example.venda.entities.Client;
 import com.example.venda.service.ClientService;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/client")
 public class ClientController {
 
     @Autowired
     ClientService clienteService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Client cliente){
+    public ResponseEntity<Object> save(@RequestBody Client cliente) {
         clienteService.save(cliente);
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
     @GetMapping
-    public List<Client> getAll(){
+    public List<Client> getAll() {
         return clienteService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id){
-        clienteService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso.");
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Object> delete(@PathVariable String email) {
+        clienteService.delete(email);
+        return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete client.");
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findByid(@PathVariable Long id){
-        Client cliente = clienteService.findById(id);
+    @GetMapping("/{email}")
+    public ResponseEntity<Object> findByid(@PathVariable String email) {
+        Client cliente = clienteService.findByEmail(email).get();
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody Client cliente, @PathVariable Long id){
-        clienteService.update(cliente, id);
+    @PutMapping("/{email}")
+    public ResponseEntity<Object> update(@RequestBody Client cliente, @PathVariable String email) {
+        clienteService.update(cliente, email);
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 

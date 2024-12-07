@@ -18,39 +18,40 @@ import com.example.venda.entities.Seller;
 import com.example.venda.service.SellerService;
 
 @RestController
-@RequestMapping("/vendedor")
+@RequestMapping("/seller")
 public class SellerController {
 
     @Autowired
-    SellerService vendedorService;
+    SellerService sellerService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody Seller vendedor){
-        vendedorService.save(vendedor);
-        return ResponseEntity.status(HttpStatus.OK).body(vendedor);
+    public ResponseEntity<Object> save(@RequestBody Seller seller){
+        sellerService.save(seller);
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
     @GetMapping
     public List<Seller> getAll(){
-        return vendedorService.findAll();
+        return sellerService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id){
-        vendedorService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Vendedor deletado com sucesso.");
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Object> delete(@PathVariable String email){
+        sellerService.delete(email);
+        return ResponseEntity.status(HttpStatus.OK).body("Sucess to delete seller.");
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> findByid(@PathVariable Long id){
-        Seller vendedor = vendedorService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(vendedor);
+    @GetMapping("/{email}")
+    public ResponseEntity<Object> findByid(@PathVariable String email){
+        Seller seller = sellerService.findByEmail(email).get();
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@RequestBody Seller vendedor, @PathVariable Long id){
-        vendedorService.update(vendedor, id);
-        return ResponseEntity.status(HttpStatus.OK).body(vendedor);
+    @PutMapping("/{email}")
+    public ResponseEntity<Object> update(@RequestBody Seller seller, @PathVariable String email){
+        sellerService.update(seller, email);
+        return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
+
 
 }

@@ -1,0 +1,37 @@
+[
+    {
+    "name": "John",
+    "surname": "Doe",
+    "email": "john.doe@example.com",
+    "birthDate": "1990-05-15",
+    "password": "Abc123!@#"
+  },
+  {
+    "name": "Emma",
+    "surname": "Williams",
+    "email": "emma.williams@example.com",
+    "birthDate": "1992-07-30",
+    "password": "Dd4&mnop"
+  },
+  {
+    "name": "Michael",
+    "surname": "Johnson",
+    "email": "michael.johnson@example.com",
+    "birthDate": "2000-01-10",
+    "password": "Ff6$uvw@"
+  },
+  {
+    "name": "Alice",
+    "surname": "Smith",
+    "email": "alice2.smith@example.com",
+    "birthDate": "1985-11-25",
+    "password": "M@rcus123"
+  },
+  {
+    "name": "Gabriel",
+    "surname": "Pereira",
+    "email": "gabriel.pereira@example.com",
+    "birthDate": "1992-03-14",
+    "password": "G@briel2021#"
+  }
+]
