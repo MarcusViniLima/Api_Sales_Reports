@@ -17,7 +17,7 @@ public class RelatorioRepository {
     @Autowired 
     private JdbcTemplate jdbcTemplate;
 
-    // Relatório de produtos mais vendidos
+    
     public List<ProdutoMaisVendidoDTO> findProdutosMaisVendidos() {
         String sql = "SELECT p.name AS product_name, SUM(s.quantity_product) AS total_quantity_sold " +
                  "FROM sale s " +
@@ -31,7 +31,7 @@ public class RelatorioRepository {
         ));
     }
 
-    // Relatório de produtos por cliente
+    
     public List<ProdutoPorClienteDTO> findProdutoPorCliente() {
         String sql = "SELECT c.name AS client_name, p.name AS product_name, SUM(s.quantity_product) AS total_quantity_purchased " +
                      "FROM sale s " +
@@ -47,7 +47,7 @@ public class RelatorioRepository {
         ));
     }
 
-    // Relatório de consumo médio do cliente
+    
     public List<ConsumoMedioDTO> findConsumoMedioCliente() {
         String sql = "SELECT c.name AS client_name, AVG(s.quantity_product) AS avg_quantity_purchased " +
                      "FROM sale s " +
@@ -61,7 +61,7 @@ public class RelatorioRepository {
         ));
     }
 
-    // Relatório de produtos com baixo estoque
+    
     public List<ProdutoComBaixoEstoqueDTO> findProdutosComBaixoEstoque() {
         String sql = "SELECT p.name AS product_name, p.quantity AS current_stock " +
                      "FROM product p " +

@@ -1,6 +1,7 @@
 package com.example.venda.entities;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +27,9 @@ public class Seller extends Member {
     @Enumerated(EnumType.STRING)
     private AcessLevels acessLevels = AcessLevels.ROLE_SELLER;
 
+    @OneToMany(mappedBy = "seller")
     @JsonBackReference
-    private List<Sale> sales;
+    private List<Sale> sales = new ArrayList<>();
     
     @Override
     public int hashCode() {

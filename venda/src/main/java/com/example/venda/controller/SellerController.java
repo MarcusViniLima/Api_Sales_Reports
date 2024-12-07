@@ -53,14 +53,5 @@ public class SellerController {
         return ResponseEntity.status(HttpStatus.OK).body(seller);
     }
 
-    @PostMapping("/register")
-    public String registerSellers() {
-        try {
-            sellerService.registerSellersFromJson();
-            return "Sellers registered successfully!";
-        } catch (Exception e) {
-            return "Error registering clients: " + e.getMessage();
-        }
-    }
 
 }

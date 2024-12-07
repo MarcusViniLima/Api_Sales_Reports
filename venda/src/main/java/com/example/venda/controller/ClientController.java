@@ -53,16 +53,4 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(cliente);
     }
 
-    @PostMapping("/register")
-    public String registerClients() {
-        try {
-            clienteService.registerClientsFromJson();
-            return "Clients registered successfully!";
-        } catch (Exception e) {
-            return "Error registering clients: " + e.getMessage();
-        }
-    }
-
-    
-
 }

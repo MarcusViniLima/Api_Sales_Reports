@@ -110,7 +110,9 @@ public class SellerService {
                     inputStream,
                     new TypeReference<List<Seller>>() {
                     });
-            sellerRepository.saveAll(sellers);
+            for (Seller seller : sellers) {
+                this.save(seller);
+            }
             logger.info("Seller registration completed successfully: {} sellers registered.", sellers.size());
         } catch (IOException e) {
             logger.error("Error loading the JSON file", e);
